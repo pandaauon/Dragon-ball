@@ -233,7 +233,7 @@ else
 
 
 		local start = tick()
-		while tick() - start < 3 do
+		while tick() - start < 6 do
 			task.wait()
 		end
 
