@@ -1,3 +1,7 @@
+if pickup == nil then
+    pickup = false
+end
+
 repeat wait() until game:IsLoaded()
 
 if game.PlaceId == 7922773201 then
