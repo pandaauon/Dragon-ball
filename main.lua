@@ -55,7 +55,7 @@ else
 
 
 	local function pick(pos)
-		local radius = 5
+		local radius = 1
 		local closestModel
 		local closestDist = math.huge
 
@@ -240,16 +240,54 @@ else
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v27)
                     if pickup == true then
 						makepart(v27)
-						local bodyVelocity = Instance.new("BodyVelocity")
-						bodyVelocity.Name = "WRDBodyVelocity"
-						bodyVelocity.Parent = game.Players.LocalPlayer.player.Character.HumanoidRootPart
                     	repeat task.wait() until game:IsLoaded()
                         task.wait(2)
                         pick(v27)
                         task.wait(0.2)
                         pick(v27)
-                        game.Players.LocalPlayer.Character:BreakJoints()
-                        game.Players.LocalPlayer.CharacterAdded:Wait():WaitForChild("HumanoidRootPart")
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+                        task.wait(0.2)
+                        pick(v27)
+						task.wait(10)
                         Teleport()
                     end
 				end
