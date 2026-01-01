@@ -204,8 +204,11 @@ else
 					print(v27)
 					noclip()
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v27)
-                    repeat task.wait() until game:IsLoaded()
                     if pickup == true then
+						local bodyVelocity = Instance.new("BodyVelocity")
+						bodyVelocity.Name = "WRDBodyVelocity"
+						bodyVelocity.Parent = player.Character.HumanoidRootPart
+                    	repeat task.wait() until game:IsLoaded()
                         task.wait(2)
                         pick(v27)
                         task.wait(0.2)
