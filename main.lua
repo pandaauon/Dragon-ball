@@ -242,7 +242,7 @@ else
 						makepart(v27)
 						local bodyVelocity = Instance.new("BodyVelocity")
 						bodyVelocity.Name = "WRDBodyVelocity"
-						bodyVelocity.Parent = player.Character.HumanoidRootPart
+						bodyVelocity.Parent = game.Players.LocalPlayer.player.Character.HumanoidRootPart
                     	repeat task.wait() until game:IsLoaded()
                         task.wait(2)
                         pick(v27)
