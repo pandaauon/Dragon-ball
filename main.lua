@@ -149,8 +149,35 @@ else
 		makefolder("raikoufinalstandshit")
 		writefile("raikoufinalstandshit/Settings.json",HttpService:JSONEncode(Table))
 	end
+	local function SyncServers()
+		local path = "raikoufinalstandshit/Settings.json"
+		local Settings = {}
+
+		if isfile(path) then
+			Settings = HttpService:JSONDecode(readfile(path))
+		end
+
+
+		local CurrentServers = {}
+		for _, server in ipairs(ReplicatedStorage.Servers:GetChildren()) do
+			CurrentServers[server.Name] = true
+
+			if Settings[server.Name] == nil then
+				Settings[server.Name] = false
+			end
+		end
+
+		for serverId in pairs(Settings) do
+			if not CurrentServers[serverId] then
+				Settings[serverId] = nil
+			end
+		end
+
+		writefile(path, HttpService:JSONEncode(Settings))
+	end
 
 	local function Teleport()
+		SyncServers()
 		if not isfile("raikoufinalstandshit/Settings.json") then return end
 		
 		local Settings = HttpService:JSONDecode(readfile("raikoufinalstandshit/Settings.json"))
