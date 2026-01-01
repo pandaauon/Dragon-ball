@@ -206,7 +206,6 @@ else
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v27)
                     repeat task.wait() until game:IsLoaded()
                     if pickup == true then
-                        game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Anchored = true
                         task.wait(2)
                         pick(v27)
                         task.wait(0.2)
