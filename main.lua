@@ -173,6 +173,8 @@ function Teleport()
         ServerTP:FireServer(inst)
         task.wait(0.25)
     end
+    task.wait(2)
+    Teleport()
 end
 
 local function makepart(pos)
