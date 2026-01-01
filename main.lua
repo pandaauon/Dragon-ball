@@ -149,68 +149,80 @@ else
 		makefolder("raikoufinalstandshit")
 		writefile("raikoufinalstandshit/Settings.json",HttpService:JSONEncode(Table))
 	end
+	local BLACKLIST_FILE = "raikoufinalstandshit/Blacklist.json"
+
+	if not isfile(BLACKLIST_FILE) then
+		writefile(BLACKLIST_FILE, "{}")
+	end
+
+	local function GetBlacklist()
+		return HttpService:JSONDecode(readfile(BLACKLIST_FILE))
+	end
+
+	local function BlacklistServer(serverId)
+		local bl = GetBlacklist()
+		bl[serverId] = true
+		writefile(BLACKLIST_FILE, HttpService:JSONEncode(bl))
+		warn("BLACKLISTED DEAD SERVER:", serverId)
+	end
+
+	local function IsBlacklisted(serverId)
+		return GetBlacklist()[serverId] == true
+	end
+
 	local function SyncServers()
 		if not isfile("raikoufinalstandshit/Settings.json") then return end
 
 		local Settings = HttpService:JSONDecode(readfile("raikoufinalstandshit/Settings.json"))
 		local CurrentServers = {}
+		local Blacklist = GetBlacklist()
 
-		-- Build current server list
 		for _, server in ipairs(ReplicatedStorage.Servers:GetChildren()) do
-			CurrentServers[server.Name] = true
+			if not Blacklist[server.Name] then
+				CurrentServers[server.Name] = true
+			end
 		end
 
-		-- 1. Remove old servers (no longer exist)
 		for serverId in pairs(Settings) do
 			if not CurrentServers[serverId] then
 				Settings[serverId] = nil
 			end
 		end
 
-		-- 2. Add new servers
 		for serverId in pairs(CurrentServers) do
 			if Settings[serverId] == nil then
 				Settings[serverId] = false
 			end
 		end
 
-		writefile(
-			"raikoufinalstandshit/Settings.json",
-			HttpService:JSONEncode(Settings)
-		)
+		writefile("raikoufinalstandshit/Settings.json", HttpService:JSONEncode(Settings))
 	end
 
 	local function Teleport()
 		SyncServers()
-		if not isfile("raikoufinalstandshit/Settings.json") then return end
-		
-		local Settings = HttpService:JSONDecode(readfile("raikoufinalstandshit/Settings.json"))
 
+		local path = "raikoufinalstandshit/Settings.json"
+		local Settings = HttpService:JSONDecode(readfile(path))
 		local ChosenID
+
 		for ServerID, Visited in pairs(Settings) do
-			if not Visited then
+			if not Visited and not IsBlacklisted(ServerID) then
 				ChosenID = ServerID
-				Settings[ServerID] = true
 				break
 			end
 		end
 
 		if not ChosenID then
-			warn("resetting list")
-
 			for ServerID in pairs(Settings) do
 				Settings[ServerID] = false
 			end
-
-			writefile("raikoufinalstandshit/Settings.json", HttpService:JSONEncode(Settings))
+			writefile(path, HttpService:JSONEncode(Settings))
 			return Teleport()
 		end
 
-		writefile("raikoufinalstandshit/Settings.json", HttpService:JSONEncode(Settings))
-
 		local FoundServer = ReplicatedStorage.Servers:FindFirstChild(ChosenID)
 		if not FoundServer then
-			warn("Server ID not found:", ChosenID)
+			BlacklistServer(ChosenID)
 			return Teleport()
 		end
 
@@ -219,10 +231,19 @@ else
 			task.wait(0.25)
 		end
 
-		print("Teleport request sent:", ChosenID)
-		task.wait(2)
-		Teleport()
+
+		local start = tick()
+		while tick() - start < 3 do
+			task.wait()
+		end
+
+
+		BlacklistServer(ChosenID)
+		Settings[ChosenID] = true
+		writefile(path, HttpService:JSONEncode(Settings))
+		return Teleport()
 	end
+
 
 
 	task.spawn(function()
