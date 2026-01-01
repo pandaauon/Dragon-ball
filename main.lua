@@ -169,8 +169,6 @@ function Teleport()
     visited[chosen] = true
     SaveVisited(visited)
 
-    NotifyWebhook("Teleporting to server")
-
     for i = 1, 5 do
         ServerTP:FireServer(inst)
         task.wait(0.25)
