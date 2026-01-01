@@ -1,7 +1,8 @@
+print(pickup)
 if pickup == nil then
     pickup = false
 end
-----------------
+print(pickup)
 repeat wait() until game:IsLoaded()
 
 if game.PlaceId == 7922773201 then
