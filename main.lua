@@ -176,49 +176,46 @@ else
 		writefile(path, HttpService:JSONEncode(Settings))
 	end
 
+	local Teleporting = false
+
 	local function Teleport()
-		SyncServers()
-		if not isfile("raikoufinalstandshit/Settings.json") then return end
-		
-		local Settings = HttpService:JSONDecode(readfile("raikoufinalstandshit/Settings.json"))
+		if Teleporting then return end
+		Teleporting = true
 
-		local ChosenID
-		for ServerID, Visited in pairs(Settings) do
-			if not Visited then
-				ChosenID = ServerID
-				Settings[ServerID] = true
-				break
+		while true do
+			SyncServers()
+
+			local Settings = HttpService:JSONDecode(readfile("raikoufinalstandshit/Settings.json"))
+			local ChosenID
+
+			for id, visited in pairs(Settings) do
+				if not visited then
+					ChosenID = id
+					Settings[id] = true
+					break
+				end
 			end
-		end
 
-		if not ChosenID then
-			warn("resetting list")
-
-			for ServerID in pairs(Settings) do
-				Settings[ServerID] = false
+			if not ChosenID then
+				for id in pairs(Settings) do
+					Settings[id] = false
+				end
+				writefile("raikoufinalstandshit/Settings.json", HttpService:JSONEncode(Settings))
+				task.wait(1)
+				continue
 			end
 
 			writefile("raikoufinalstandshit/Settings.json", HttpService:JSONEncode(Settings))
-			return Teleport()
+
+			local server = ReplicatedStorage.Servers:FindFirstChild(ChosenID)
+			if server then
+				ServerTP:FireServer(server)
+			end
+
+			task.wait(3) 
 		end
-
-		writefile("raikoufinalstandshit/Settings.json", HttpService:JSONEncode(Settings))
-
-		local FoundServer = ReplicatedStorage.Servers:FindFirstChild(ChosenID)
-		if not FoundServer then
-			warn("Server ID not found:", ChosenID)
-			return Teleport()
-		end
-
-		for i = 1, 5 do
-			ServerTP:FireServer(FoundServer)
-			task.wait(0.25)
-		end
-
-		print("Teleport request sent:", ChosenID)
-		task.wait(2)
-		Teleport()
 	end
+
 
 
 	task.spawn(function()
@@ -241,52 +238,10 @@ else
                     if pickup == true then
 						makepart(v27)
                     	repeat task.wait() until game:IsLoaded()
-                        task.wait(2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
-                        task.wait(0.2)
-                        pick(v27)
+						for i = 1, 5 do
+							pick(v27)
+							task.wait(0.2)
+						end
 						task.wait(10)
                         Teleport()
                     end
