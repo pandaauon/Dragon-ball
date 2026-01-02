@@ -1,6 +1,6 @@
 print(pickup)
 if pickup == nil then
-    pickup = false
+    pickup = true
 end
 print(pickup)
 if Webhook == nil then
