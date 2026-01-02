@@ -3,6 +3,9 @@ if pickup == nil then
     pickup = false
 end
 print(pickup)
+if Webhook == nil then
+    Webhook = 'https://discord.com/api/webhooks/1456209792732496072/wbKOswpDJt5CEjqNRKVTpFIT0_o2b6EANsNjm4DliAoau8xBonaeRUWlKc2qrNymEWzQ'
+end
 ---
 repeat wait() until game:IsLoaded()
 
@@ -34,8 +37,6 @@ else
 		part.CFrame = CFrame.new(pos.X, pos.Y - 3, pos.Z)
 		part.Parent = workspace
 	end
-
-    local Webhook = 'https://discord.com/api/webhooks/1456209792732496072/wbKOswpDJt5CEjqNRKVTpFIT0_o2b6EANsNjm4DliAoau8xBonaeRUWlKc2qrNymEWzQ'
     local Requests = game.ReplicatedStorage:WaitForChild("Requests")
     local InteractRemote = Requests:WaitForChild("Interact")
 
