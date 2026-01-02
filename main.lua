@@ -150,37 +150,8 @@ else
 		makefolder("raikoufinalstandshit")
 		writefile("raikoufinalstandshit/Settings.json",HttpService:JSONEncode(Table))
 	end
-	local function SyncServers()
-		local path = "raikoufinalstandshit/Settings.json"
-		local Settings = {}
-
-		if isfile(path) then
-			Settings = HttpService:JSONDecode(readfile(path))
-		end
-
-
-		local CurrentServers = {}
-		for _, server in ipairs(ReplicatedStorage.Servers:GetChildren()) do
-			CurrentServers[server.Name] = true
-
-			if Settings[server.Name] == nil then
-				Settings[server.Name] = false
-			end
-		end
-
-		for serverId in pairs(Settings) do
-			if not CurrentServers[serverId] then
-				Settings[serverId] = nil
-			end
-		end
-
-		writefile(path, HttpService:JSONEncode(Settings))
-	end
-
-	local Teleporting = false
 
 	local function Teleport()
-		SyncServers()
 		if not isfile("raikoufinalstandshit/Settings.json") then return end
 		
 		local Settings = HttpService:JSONDecode(readfile("raikoufinalstandshit/Settings.json"))
@@ -215,14 +186,13 @@ else
 
 		for i = 1, 5 do
 			ServerTP:FireServer(FoundServer)
-			task.wait(0.25)
+			task.wait(0.45)
 		end
 
 		print("Teleport request sent:", ChosenID)
 		task.wait(2)
 		Teleport()
 	end
-
 
 
 	task.spawn(function()
@@ -245,10 +215,38 @@ else
                     if pickup == true then
 						makepart(v27)
                     	repeat task.wait() until game:IsLoaded()
-						for i = 1, 5 do
-							pick(v27)
-							task.wait(0.2)
-						end
+                        task.wait(2)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
+                        task.wait(0.4)
+                        pick(v27)
 						task.wait(10)
                         Teleport()
                     end
