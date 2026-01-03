@@ -184,13 +184,13 @@ else
 			return Teleport()
 		end
 
-		for i = 1, 5 do
+		for i = 1, 3 do
 			ServerTP:FireServer(FoundServer)
-			task.wait(0.45)
+			task.wait(1)
 		end
 
 		print("Teleport request sent:", ChosenID)
-		task.wait(2)
+		task.wait(3)
 		Teleport()
 	end
 
@@ -214,7 +214,6 @@ else
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v27)
                     if pickup == true then
 						makepart(v27)
-                    	repeat task.wait() until game:IsLoaded()
                         task.wait(2)
                         pick(v27)
                         task.wait(0.4)
